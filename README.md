@@ -1,2 +1,2 @@
-# get_company_name
+# comnamepy
 Get the company name from the domain.
