@@ -2,8 +2,6 @@ import whois
 import re
 import requests
 from bs4 import BeautifulSoup
-from whois.parser import PywhoisError
-import time
 
 
 # Get company name from whois
@@ -13,7 +11,7 @@ def whois_search_company(domain):
     try:
         # Get domain information from whois
         whois_domain = whois.whois(domain)
-    except PywhoisError:
+    except:
         return print('No match domain!!!')
 
     # Make a dictionary in the domain information
@@ -95,9 +93,11 @@ def get_title(domain):
     title = str(title).replace(' ', '')
     return title
 
-if __name__=='__main__':
-    whois_search_company()
-    get_title()
+def main():
+    company_name = whois_search_company('taktpixel.co.jp')
+    print(company_name)
 
+if __name__=='__main__':
+    main()
 
 
