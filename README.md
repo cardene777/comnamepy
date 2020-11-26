@@ -49,4 +49,7 @@ get_comname.whois_search_company('domain')
 get_comname.get_title('domain')
 ```
 
+# Attention
+When getting the company name in succession, use time.sleep(), etc.
+
 
