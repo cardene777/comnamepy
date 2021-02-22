@@ -6,23 +6,23 @@ import os
 
 from setuptools import setup, find_packages
 
-try:
-    with open('README.md') as f:
-        readme = f.read()
-except IOError:
-    readme = ''
 
-def _requires_from_file(filename):
-    return open(filename).read().splitlines()
+def parse_requirements(filename):
+    """ load requirements from a pip requirements file """
+    lineiter = (line.strip() for line in open(filename))
+    return [line for line in lineiter if line and not line.startswith("#")]
+
+
+reqs = parse_requirements('requirements.txt')
+
+here = os.path.dirname(os.path.abspath(__file__))
+with open(os.path.join(here, 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
 
 # version
-here = os.path.dirname(os.path.abspath(__file__))
 version = next((line.split('=')[1].strip().replace("'", '')
-                for line in open(os.path.join(here,
-                                              'comnamepy',
-                                              '__init__.py'))
-                if line.startswith('__version__ = ')),
-               '0.0.dev0')
+                for line in open(os.path.join(here, 'comnamepy', '__init__.py'))
+                if line.startswith('__version__ = ')), '0.0.dev0')
 
 setup(
     name="comnamepy",
@@ -33,11 +33,15 @@ setup(
     maintainer='heku777',
     maintainer_email='chotips08@gmail.com',
     description='Get the company name from the domain.',
-    long_description=readme,
+    long_description=long_description,
+    long_description_content_type='text/markdown',
     packages=find_packages(),
-    install_requires=_requires_from_file('requirements.txt'),
+    install_requires=reqs,
+    zip_safe=False,
+    python_requires='>=3.6',
     license="MIT",
     classifiers=[
+        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'License :: OSI Approved :: MIT License',
